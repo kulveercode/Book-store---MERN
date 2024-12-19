@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import AvatarImg from "../assets/avatar.png";
 import { useState } from "react";
 import { useSelector } from "react-redux";
+import { useAuth } from "../context/AuthContext";
 
 const navigation = [
   { name: "Dashboard", href: "/dashboard" },
@@ -19,7 +20,12 @@ const Navbar = () => {
   const cartItems = useSelector((state) => state.cart.cartItems);
   // console.log(cartItems);
 
-  const currentUser = false;
+  const { currentUser, logOut} = useAuth();
+
+  const handleLogOut = () => {
+    logOut();
+  }
+
   return (
     <header className="max-w-screen-2xl mx-auto px-10 md:px-16 py-6">
       <nav className="flex justify-between items-center">
@@ -65,6 +71,11 @@ const Navbar = () => {
                           <Link to={item.href}>{item.name}</Link>
                         </li>
                       ))}
+                      <li>
+                        <button
+                        onClick={handleLogOut}
+                        className="block px-4 py-2 text-sm hover:bg-gray-100 w-full text-left">Logout</button>
+                      </li>
                     </ul>
                   </div>
                 )}
